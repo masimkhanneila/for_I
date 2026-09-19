@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+import os
 
 app = FastAPI()
 
@@ -32,3 +33,13 @@ def friend():
 @app.get("/me.jpg")
 def me():
     return FileResponse("me.jpg")
+
+
+@app.get("/check")
+def check():
+    return {
+        "friend_exists": os.path.exists("friend.jpg"),
+        "me_exists": os.path.exists("me.jpg"),
+        "heart_exists": os.path.exists("heart.svg"),
+        "files": os.listdir(".")
+    }
